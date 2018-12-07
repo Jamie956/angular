@@ -6,3 +6,22 @@ npm install -g @angular/cli
 ng new my-app
 ng serve --open
 ```
+
+```shell
+ng new angular-tour-of-heroes
+ng serve --open
+
+ng generate component heroes
+```
+
+### Component
+@Component is a decorator function that specifies the Angular metadata for the component.
+
+
+selector— the component's CSS element selector
+templateUrl— the location of the component's template file.
+styleUrls— the location of the component's private CSS styles.
+
+
+The ngOnInit is a lifecycle hook. Angular calls ngOnInit shortly after creating a component. It's a good place to put initialization logic.
+
