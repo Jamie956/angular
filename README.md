@@ -25,3 +25,8 @@ styleUrls— the location of the component's private CSS styles.
 
 The ngOnInit is a lifecycle hook. Angular calls ngOnInit shortly after creating a component. It's a good place to put initialization logic.
 
+[(ngModel)] is Angular's two-way data binding syntax. 
+
+Angular needs to know how the pieces of your application fit together and what other files and libraries the app requires. This information is called metadata
+
+The *ngFor is Angular's repeater directive. It repeats the host element for each element in a list.
