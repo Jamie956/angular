@@ -14,6 +14,10 @@ ng serve --open
 ng generate component heroes
 ```
 
+```
+ng generate component hero-detail
+```
+
 ### Component
 @Component is a decorator function that specifies the Angular metadata for the component.
 
