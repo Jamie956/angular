@@ -1,5 +1,3 @@
-
-
 Angular quick start
 
 ```shell
@@ -170,7 +168,7 @@ A template **statement** responds to an **event** raised by a binding target
 
 
 
-Binding syntax
+**Binding syntax**
 
 ```js
 //One-way from data source to view target
@@ -189,8 +187,8 @@ bindon-target="expression"
 
 
 
-**Attributes initialize DOM properties and then they are done.
-Property values can change; attribute values can't.**
+Attributes initialize DOM properties and then they are done.
+Property values can change; attribute values can't.
 
 
 
@@ -202,7 +200,7 @@ A world without attributes
 
 
 
-Binding targets
+**Binding targets**
 
 ```html
 <img [src]="heroImageUrl">
@@ -224,7 +222,7 @@ Binding targets
 
 
 
-NgClass
+**NgClass**
 
 ```js
 currentClasses: {};
@@ -246,7 +244,7 @@ setCurrentClasses() {
 
 
 
-NgStyle
+**NgStyle**
 
 ```js
 currentStyles: {};
@@ -270,7 +268,7 @@ setCurrentStyles() {
 
 
 
-NgModel
+**NgModel**
 
 ```js
 import { NgModule } from '@angular/core';
@@ -294,6 +292,231 @@ export class AppModule { }
 ```html
 <input [(ngModel)]="currentHero.name">
 ```
+
+
+
+**NgIf**
+
+Add or remove an element from the DOM
+
+```html
+<app-hero-detail *ngIf="isActive"></app-hero-detail>
+```
+
+
+
+**NgForOf**
+
+```html
+<div *ngFor="let hero of heroes">{{hero.name}}</div>
+```
+
+
+
+***ngFor with trackBy**
+
+```js
+trackByHeroes(index: number, hero: Hero): number { return hero.id; }
+```
+
+
+
+```html
+<div *ngFor="let hero of heroes; trackBy: trackByHeroes">
+  ({{hero.id}}) {{hero.name}}
+</div>
+```
+
+
+
+**The *NgSwitch* directives**
+
+```html
+<div [ngSwitch]="currentHero.emotion">
+  <app-happy-hero    *ngSwitchCase="'happy'"    [hero]="currentHero"></app-happy-hero>
+  <app-sad-hero      *ngSwitchCase="'sad'"      [hero]="currentHero"></app-sad-hero>
+  <app-confused-hero *ngSwitchCase="'confused'" [hero]="currentHero"></app-confused-hero>
+  <app-unknown-hero  *ngSwitchDefault           [hero]="currentHero"></app-unknown-hero>
+</div>
+```
+
+
+
+A **template reference variable** is often a reference to a DOM element within a template.
+It can also be a reference to an Angular component or directive or a
+[web component](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
+
+```html
+<input #phone placeholder="phone number">
+
+<!-- lots of other elements -->
+
+<!-- phone refers to the input element; pass its `value` to an event handler -->
+<button (click)="callPhone(phone.value)">Call</button>
+```
+
+
+
+**ngForm**
+
+```html
+<form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
+  <div class="form-group">
+    <label for="name">Name
+      <input class="form-control" name="name" required [(ngModel)]="hero.name">
+    </label>
+  </div>
+  <button type="submit" [disabled]="!heroForm.form.valid">Submit</button>
+</form>
+<div [hidden]="!heroForm.form.valid">
+  {{submitMessage}}
+</div>
+```
+
+
+
+**Declaring Input and Output properties**
+
+```js
+@Input()  hero: Hero;
+@Output() deleteRequest = new EventEmitter<Hero>();
+```
+
+
+
+**Pipe**
+
+```html
+<div>Title through uppercase pipe: {{title | uppercase}}</div>
+```
+
+
+
+**Safe navigation operator (`?.`)**
+
+```html
+The current hero's name is {{currentHero?.name}}
+```
+
+ 
+
+**non-null assertion operator (!)**
+
+```html
+<!--No hero, no text -->
+<div *ngIf="hero">
+  The hero's name is {{hero!.name}}
+</div>
+```
+
+
+
+#### User Input
+
+
+
+Type the *$event*
+
+```js
+export class KeyUpComponent_v1 {
+  values = '';
+  onKey(event: KeyboardEvent) { // with type info
+    this.values += (<HTMLInputElement>event.target).value + ' | ';
+  }
+}
+```
+
+
+
+Get user input from a template reference variable
+
+```js
+@Component({
+  selector: 'app-key-up2',
+  template: `
+    <input #box (keyup)="onKey(box.value)">
+    <p>{{values}}</p>
+  `
+})
+export class KeyUpComponent_v2 {
+  values = '';
+  onKey(value: string) {
+    this.values += value + ' | ';
+  }
+}
+```
+
+
+
+Key event filtering (with `key.enter`)
+
+```js
+@Component({
+  selector: 'app-key-up3',
+  template: `
+    <input #box (keyup.enter)="onEnter(box.value)">
+    <p>{{value}}</p>
+  `
+})
+export class KeyUpComponent_v3 {
+  value = '';
+  onEnter(value: string) { this.value = value; }
+}
+```
+
+
+
+On blur
+
+```js
+@Component({
+  selector: 'app-key-up4',
+  template: `
+    <input #box
+      (keyup.enter)="update(box.value)"
+      (blur)="update(box.value)">
+
+    <p>{{value}}</p>
+  `
+})
+export class KeyUpComponent_v4 {
+  value = '';
+  update(value: string) { this.value = value; }
+}
+```
+
+
+
+#### Lifecycle Hooks
+
+
+
+ngOnInit
+
+```js
+export class PeekABoo implements OnInit {
+  constructor(private logger: LoggerService) { }
+
+  // implement OnInit's `ngOnInit` method
+  ngOnInit() { this.logIt(`OnInit`); }
+
+  logIt(msg: string) {
+    this.logger.log(`#${nextId++} ${msg}`);
+  }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
