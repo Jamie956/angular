@@ -913,7 +913,7 @@ export class CountdownViewChildParentComponent implements AfterViewInit {
 
 
 
-
+Parent and children communicate via a service
 
 
 
