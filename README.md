@@ -592,3 +592,352 @@ export class AfterViewComponent implements  AfterViewChecked, AfterViewInit {
 
 
 
+Pass data from parent to child with input binding
+
+```js
+//hero-child.component.ts
+import { Component, Input } from '@angular/core';
+
+import { Hero } from './hero';
+
+@Component({
+  selector: 'app-hero-child',
+  template: `
+    <h3>{{hero.name}} says:</h3>
+    <p>I, {{hero.name}}, am at your service, {{masterName}}.</p>
+  `
+})
+export class HeroChildComponent {
+  @Input() hero: Hero;
+  @Input('master') masterName: string;
+}
+```
+
+
+
+```js
+//hero-parent.component.ts
+import { Component } from '@angular/core';
+
+import { HEROES } from './hero';
+
+@Component({
+  selector: 'app-hero-parent',
+  template: `
+    <h2>{{master}} controls {{heroes.length}} heroes</h2>
+    <app-hero-child *ngFor="let hero of heroes"
+      [hero]="hero"
+      [master]="master">
+    </app-hero-child>
+  `
+})
+export class HeroParentComponent {
+  heroes = HEROES;
+  master = 'Master';
+}
+```
+
+
+
+Intercept input property changes with a setter
+
+```js
+//name-child.component.ts
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-name-child',
+  template: '<h3>"{{name}}"</h3>'
+})
+export class NameChildComponent {
+  private _name = '';
+
+  @Input()
+  set name(name: string) {
+    this._name = (name && name.trim()) || '<no name set>';
+  }
+
+  get name(): string { return this._name; }
+}
+```
+
+
+
+```js
+//name-parent.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-name-parent',
+  template: `
+  <h2>Master controls {{names.length}} names</h2>
+  <app-name-child *ngFor="let name of names" [name]="name"></app-name-child>
+  `
+})
+export class NameParentComponent {
+  // Displays 'Mr. IQ', '<no name set>', 'Bombasto'
+  names = ['Mr. IQ', '   ', '  Bombasto  '];
+}
+```
+
+
+
+Intercept input property changes with *ngOnChanges()*
+
+```js
+//version-child.component.ts
+import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
+
+@Component({
+  selector: 'app-version-child',
+  template: `
+    <h3>Version {{major}}.{{minor}}</h3>
+    <h4>Change log:</h4>
+    <ul>
+      <li *ngFor="let change of changeLog">{{change}}</li>
+    </ul>
+  `
+})
+export class VersionChildComponent implements OnChanges {
+  @Input() major: number;
+  @Input() minor: number;
+  changeLog: string[] = [];
+
+  ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
+    let log: string[] = [];
+    for (let propName in changes) {
+      let changedProp = changes[propName];
+      let to = JSON.stringify(changedProp.currentValue);
+      if (changedProp.isFirstChange()) {
+        log.push(`Initial value of ${propName} set to ${to}`);
+      } else {
+        let from = JSON.stringify(changedProp.previousValue);
+        log.push(`${propName} changed from ${from} to ${to}`);
+      }
+    }
+    this.changeLog.push(log.join(', '));
+  }
+}
+```
+
+
+
+```js
+//version-parent.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-version-parent',
+  template: `
+    <h2>Source code version</h2>
+    <button (click)="newMinor()">New minor version</button>
+    <button (click)="newMajor()">New major version</button>
+    <app-version-child [major]="major" [minor]="minor"></app-version-child>
+  `
+})
+export class VersionParentComponent {
+  major = 1;
+  minor = 23;
+
+  newMinor() {
+    this.minor++;
+  }
+
+  newMajor() {
+    this.major++;
+    this.minor = 0;
+  }
+}
+```
+
+
+
+Parent listens for child event
+
+```js
+//voter.component.ts
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
+@Component({
+  selector: 'app-voter',
+  template: `
+    <h4>{{name}}</h4>
+    <button (click)="vote(true)"  [disabled]="didVote">Agree</button>
+    <button (click)="vote(false)" [disabled]="didVote">Disagree</button>
+  `
+})
+export class VoterComponent {
+  @Input()  name: string;
+  @Output() voted = new EventEmitter<boolean>();
+  didVote = false;
+
+  vote(agreed: boolean) {
+    this.voted.emit(agreed);
+    this.didVote = true;
+  }
+}
+```
+
+
+
+```js
+//votetaker.component.ts
+import { Component }      from '@angular/core';
+
+@Component({
+  selector: 'app-vote-taker',
+  template: `
+    <h2>Should mankind colonize the Universe?</h2>
+    <h3>Agree: {{agreed}}, Disagree: {{disagreed}}</h3>
+    <app-voter *ngFor="let voter of voters"
+      [name]="voter"
+      (voted)="onVoted($event)">
+    </app-voter>
+  `
+})
+export class VoteTakerComponent {
+  agreed = 0;
+  disagreed = 0;
+  voters = ['Mr. IQ', 'Ms. Universe', 'Bombasto'];
+
+  onVoted(agreed: boolean) {
+    agreed ? this.agreed++ : this.disagreed++;
+  }
+}
+```
+
+
+
+Parent interacts with child via *local variable*
+
+```js
+//countdown-timer.component.ts
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-countdown-timer',
+  template: '<p>{{message}}</p>'
+})
+export class CountdownTimerComponent implements OnInit, OnDestroy {
+
+  intervalId = 0;
+  message = '';
+  seconds = 11;
+
+  clearTimer() { clearInterval(this.intervalId); }
+
+  ngOnInit()    { this.start(); }
+  ngOnDestroy() { this.clearTimer(); }
+
+  start() { this.countDown(); }
+  stop()  {
+    this.clearTimer();
+    this.message = `Holding at T-${this.seconds} seconds`;
+  }
+
+  private countDown() {
+    this.clearTimer();
+    this.intervalId = window.setInterval(() => {
+      this.seconds -= 1;
+      if (this.seconds === 0) {
+        this.message = 'Blast off!';
+      } else {
+        if (this.seconds < 0) { this.seconds = 10; } // reset
+        this.message = `T-${this.seconds} seconds and counting`;
+      }
+    }, 1000);
+  }
+}
+```
+
+
+
+```js
+//countdown-parent.component.ts
+import { Component }                from '@angular/core';
+import { CountdownTimerComponent }  from './countdown-timer.component';
+
+@Component({
+  selector: 'app-countdown-parent-lv',
+  template: `
+  <h3>Countdown to Liftoff (via local variable)</h3>
+  <button (click)="timer.start()">Start</button>
+  <button (click)="timer.stop()">Stop</button>
+  <div class="seconds">{{timer.seconds}}</div>
+  <app-countdown-timer #timer></app-countdown-timer>
+  `,
+  styleUrls: ['../assets/demo.css']
+})
+export class CountdownLocalVarParentComponent { }
+```
+
+
+
+Parent calls an *@ViewChild()*
+
+```js
+//countdown-parent.component.ts
+import { AfterViewInit, ViewChild } from '@angular/core';
+import { Component }                from '@angular/core';
+import { CountdownTimerComponent }  from './countdown-timer.component';
+
+@Component({
+  selector: 'app-countdown-parent-vc',
+  template: `
+  <h3>Countdown to Liftoff (via ViewChild)</h3>
+  <button (click)="start()">Start</button>
+  <button (click)="stop()">Stop</button>
+  <div class="seconds">{{ seconds() }}</div>
+  <app-countdown-timer></app-countdown-timer>
+  `,
+  styleUrls: ['../assets/demo.css']
+})
+export class CountdownViewChildParentComponent implements AfterViewInit {
+
+  @ViewChild(CountdownTimerComponent)
+  private timerComponent: CountdownTimerComponent;
+
+  seconds() { return 0; }
+
+  ngAfterViewInit() {
+    // Redefine `seconds()` to get from the `CountdownTimerComponent.seconds` ...
+    // but wait a tick first to avoid one-time devMode
+    // unidirectional-data-flow-violation error
+    setTimeout(() => this.seconds = () => this.timerComponent.seconds, 0);
+  }
+
+  start() { this.timerComponent.start(); }
+  stop() { this.timerComponent.stop(); }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
