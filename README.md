@@ -508,19 +508,87 @@ export class PeekABoo implements OnInit {
 
 
 
+Spying *OnInit* and *OnDestroy*
+
+```js
+// Spy on any element to which it is applied.
+// Usage: <div mySpy>...</div>
+@Directive({selector: '[mySpy]'})
+export class SpyDirective implements OnInit, OnDestroy {
+
+  constructor(private logger: LoggerService) { }
+
+  ngOnInit()    { this.logIt(`onInit`); }
+
+  ngOnDestroy() { this.logIt(`onDestroy`); }
+
+  private logIt(msg: string) {
+    this.logger.log(`Spy #${nextId++} ${msg}`);
+  }
+}
+```
 
 
 
+```html
+<div *ngFor="let hero of heroes" mySpy class="heroes">
+  {{hero}}
+</div>
+```
 
 
 
+AfterView
+
+```js
+//ChildComponent
+@Component({
+  selector: 'app-child-view',
+  template: '<input [(ngModel)]="hero">'
+})
+export class ChildViewComponent {
+  hero = 'Magneta';
+}
+```
 
 
 
+```js
+//AfterViewComponent (template)
+template: `
+  <div>-- child view begins --</div>
+    <app-child-view></app-child-view>
+  <div>-- child view ends --</div>`
+
+export class AfterViewComponent implements  AfterViewChecked, AfterViewInit {
+  private prevHero = '';
+
+  // Query for a VIEW child of type `ChildViewComponent`
+  @ViewChild(ChildViewComponent) viewChild: ChildViewComponent;
+
+  ngAfterViewInit() {
+    // viewChild is set after the view has been initialized
+    this.logIt('AfterViewInit');
+    this.doSomething();
+  }
+
+  ngAfterViewChecked() {
+    // viewChild is updated after the view has been checked
+    if (this.prevHero === this.viewChild.hero) {
+      this.logIt('AfterViewChecked (no change)');
+    } else {
+      this.prevHero = this.viewChild.hero;
+      this.logIt('AfterViewChecked');
+      this.doSomething();
+    }
+  }
+  // ...
+}
+```
 
 
 
-
+#### Component Interaction
 
 
 
