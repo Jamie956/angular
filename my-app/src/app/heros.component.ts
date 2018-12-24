@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
+
 import { Hero } from "./hero";
+import { HeroService } from "./hero.service";
 
 /*****************************/
 @Component({
@@ -99,22 +101,43 @@ export class IfngComponent {}
   template: `
     <div [class.selected]="hero === selectedHero">Cannon</div>
   `,
-  styles: ['.selected { color: red; }']
+  styles: [".selected { color: red; }"]
 })
 export class StyleComponent {
-  hero = 'Cannon';
-  selectedHero = 'Cannon';
+  hero = "Cannon";
+  selectedHero = "Cannon";
 }
 
 /*****************************/
 @Component({
   selector: "app-input",
   template: `
-    <div>{{hero}}</div>
+    <div>{{ hero }}</div>
   `
 })
 export class InputComponent {
   @Input() hero: Hero;
+}
+
+/*****************************/
+@Component({
+  selector: "app-service",
+  template: `
+    <div>{{ hero.name }}</div>
+  `
+})
+export class ServiceComponent {
+  hero: Hero;
+
+  constructor(private heroService: HeroService) {}
+
+  ngOnInit() {
+    this.getHeroes();
+  }
+
+  getHeroes(): void {
+    this.heroService.getHeroes().subscribe(hero => (this.hero = hero));
+  }
 }
 
 export const heroSwitchComponents = [
@@ -126,5 +149,6 @@ export const heroSwitchComponents = [
   ClickComponent,
   IfngComponent,
   StyleComponent,
-  InputComponent
+  InputComponent,
+  ServiceComponent
 ];
