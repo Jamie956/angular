@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Hero } from "./hero";
 
+/*****************************/
 @Component({
   selector: "app-second",
   template: `
@@ -13,6 +14,7 @@ export class SecondComponent implements OnInit {
   ngOnInit() {}
 }
 
+/*****************************/
 @Component({
   selector: "app-heros",
   template: `
@@ -27,4 +29,18 @@ export class HerosComponent {
   };
 }
 
-export const heroSwitchComponents = [SecondComponent, HerosComponent];
+/*****************************/
+@Component({
+  selector: "app-upper",
+  template: `
+    <div>{{hero.name | uppercase}}</div>
+  `
+})
+export class UpperComponent {
+  hero: Hero = {
+    id: 1,
+    name: "Ark"
+  };
+}
+
+export const heroSwitchComponents = [SecondComponent, HerosComponent, UpperComponent];
