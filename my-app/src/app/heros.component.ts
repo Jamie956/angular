@@ -43,4 +43,19 @@ export class UpperComponent {
   };
 }
 
-export const heroSwitchComponents = [SecondComponent, HerosComponent, UpperComponent];
+/*****************************/
+@Component({
+  selector: "app-twoway",
+  template: `
+    <input [(ngModel)]="hero.name" placeholder="name">
+  `
+})
+export class TwowayComponent {
+  hero: Hero = {
+    id: 1,
+    name: "Kanna"
+  };
+}
+
+
+export const heroSwitchComponents = [SecondComponent, HerosComponent, UpperComponent, TwowayComponent];
