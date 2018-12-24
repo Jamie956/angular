@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { Hero } from "./hero";
 
 /*****************************/
@@ -106,6 +106,17 @@ export class StyleComponent {
   selectedHero = 'Cannon';
 }
 
+/*****************************/
+@Component({
+  selector: "app-input",
+  template: `
+    <div>{{hero}}</div>
+  `
+})
+export class InputComponent {
+  @Input() hero: Hero;
+}
+
 export const heroSwitchComponents = [
   SecondComponent,
   HerosComponent,
@@ -114,5 +125,6 @@ export const heroSwitchComponents = [
   ListHerosComponent,
   ClickComponent,
   IfngComponent,
-  StyleComponent
+  StyleComponent,
+  InputComponent
 ];
