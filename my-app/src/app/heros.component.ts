@@ -33,7 +33,7 @@ export class HerosComponent {
 @Component({
   selector: "app-upper",
   template: `
-    <div>{{hero.name | uppercase}}</div>
+    <div>{{ hero.name | uppercase }}</div>
   `
 })
 export class UpperComponent {
@@ -47,7 +47,7 @@ export class UpperComponent {
 @Component({
   selector: "app-twoway",
   template: `
-    <input [(ngModel)]="hero.name" placeholder="name">
+    <input [(ngModel)]="hero.name" placeholder="name" />
   `
 })
 export class TwowayComponent {
@@ -57,5 +57,23 @@ export class TwowayComponent {
   };
 }
 
+/*****************************/
+@Component({
+  selector: "app-list-heros",
+  template: `
+    <ul>
+      <li *ngFor="let hero of heroes">{{ hero.name }}</li>
+    </ul>
+  `
+})
+export class ListHerosComponent {
+  heroes: Hero[] = [{ id: 1, name: "Blaster" }, { id: 2, name: "Blade" }];
+}
 
-export const heroSwitchComponents = [SecondComponent, HerosComponent, UpperComponent, TwowayComponent];
+export const heroSwitchComponents = [
+  SecondComponent,
+  HerosComponent,
+  UpperComponent,
+  TwowayComponent,
+  ListHerosComponent
+];
