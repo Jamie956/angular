@@ -93,6 +93,19 @@ export class ClickComponent {
 })
 export class IfngComponent {}
 
+/*****************************/
+@Component({
+  selector: "app-style",
+  template: `
+    <div [class.selected]="hero === selectedHero">Cannon</div>
+  `,
+  styles: ['.selected { color: red; }']
+})
+export class StyleComponent {
+  hero = 'Cannon';
+  selectedHero = 'Cannon';
+}
+
 export const heroSwitchComponents = [
   SecondComponent,
   HerosComponent,
@@ -100,5 +113,6 @@ export const heroSwitchComponents = [
   TwowayComponent,
   ListHerosComponent,
   ClickComponent,
-  IfngComponent
+  IfngComponent,
+  StyleComponent
 ];
