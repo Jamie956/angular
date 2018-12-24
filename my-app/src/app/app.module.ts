@@ -2,12 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './main/app.component';
-import { SecondComponent } from './second/second.component';
+import { SecondComponent, HerosComponent } from './second/second.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SecondComponent
+    SecondComponent,
+    HerosComponent
   ],
   imports: [
     BrowserModule
