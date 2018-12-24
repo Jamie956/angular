@@ -62,7 +62,7 @@ export class TwowayComponent {
   selector: "app-list-heros",
   template: `
     <ul>
-      <li *ngFor="let hero of heroes" >{{ hero.name }}</li>
+      <li *ngFor="let hero of heroes">{{ hero.name }}</li>
     </ul>
   `
 })
@@ -79,9 +79,19 @@ export class ListHerosComponent {
 })
 export class ClickComponent {
   onClick(): void {
-    console.log('Click!!');
+    console.log("Click!!");
   }
 }
+
+/*****************************/
+@Component({
+  selector: "app-ifng",
+  template: `
+    ngIf
+    <div *ngIf="hero">{{ hero.name }}</div>
+  `
+})
+export class IfngComponent {}
 
 export const heroSwitchComponents = [
   SecondComponent,
@@ -89,5 +99,6 @@ export const heroSwitchComponents = [
   UpperComponent,
   TwowayComponent,
   ListHerosComponent,
-  ClickComponent
+  ClickComponent,
+  IfngComponent
 ];
