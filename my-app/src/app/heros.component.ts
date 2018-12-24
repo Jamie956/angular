@@ -62,7 +62,7 @@ export class TwowayComponent {
   selector: "app-list-heros",
   template: `
     <ul>
-      <li *ngFor="let hero of heroes">{{ hero.name }}</li>
+      <li *ngFor="let hero of heroes" >{{ hero.name }}</li>
     </ul>
   `
 })
@@ -70,10 +70,24 @@ export class ListHerosComponent {
   heroes: Hero[] = [{ id: 1, name: "Blaster" }, { id: 2, name: "Blade" }];
 }
 
+/*****************************/
+@Component({
+  selector: "app-click",
+  template: `
+    <button (click)="onClick()">Click me!</button>
+  `
+})
+export class ClickComponent {
+  onClick(): void {
+    console.log('Click!!');
+  }
+}
+
 export const heroSwitchComponents = [
   SecondComponent,
   HerosComponent,
   UpperComponent,
   TwowayComponent,
-  ListHerosComponent
+  ListHerosComponent,
+  ClickComponent
 ];
