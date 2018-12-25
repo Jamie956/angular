@@ -3,7 +3,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
 import { Hero } from "./hero";
 import { HeroService } from "./hero.service";
 
-/*****************************/
+//////////////////////////////
 @Component({
   selector: "app-second",
   template: `
@@ -16,7 +16,7 @@ export class SecondComponent implements OnInit {
   ngOnInit() {}
 }
 
-/*****************************/
+//////////////////////////////
 @Component({
   selector: "app-heros",
   template: `
@@ -31,7 +31,7 @@ export class HerosComponent {
   };
 }
 
-/*****************************/
+//////////////////////////////
 @Component({
   selector: "app-upper",
   template: `
@@ -45,7 +45,7 @@ export class UpperComponent {
   };
 }
 
-/*****************************/
+//////////////////////////////
 @Component({
   selector: "app-twoway",
   template: `
@@ -59,7 +59,7 @@ export class TwowayComponent {
   };
 }
 
-/*****************************/
+//////////////////////////////
 @Component({
   selector: "app-list-heros",
   template: `
@@ -72,7 +72,7 @@ export class ListHerosComponent {
   heroes: Hero[] = [{ id: 1, name: "Blaster" }, { id: 2, name: "Blade" }];
 }
 
-/*****************************/
+//////////////////////////////
 @Component({
   selector: "app-click",
   template: `
@@ -85,7 +85,7 @@ export class ClickComponent {
   }
 }
 
-/*****************************/
+//////////////////////////////
 @Component({
   selector: "app-ifng",
   template: `
@@ -95,7 +95,7 @@ export class ClickComponent {
 })
 export class IfngComponent {}
 
-/*****************************/
+//////////////////////////////
 @Component({
   selector: "app-style",
   template: `
@@ -108,7 +108,7 @@ export class StyleComponent {
   selectedHero = "Cannon";
 }
 
-/*****************************/
+//////////////////////////////
 @Component({
   selector: "app-input",
   template: `
@@ -119,7 +119,7 @@ export class InputComponent {
   @Input() hero: Hero;
 }
 
-/*****************************/
+//////////////////////////////
 @Component({
   selector: "app-service",
   template: `
@@ -140,7 +140,7 @@ export class ServiceComponent {
   }
 }
 
-/*****************************/
+//////////////////////////////
 @Component({
   selector: "app-route-a",
   template: `
@@ -149,7 +149,7 @@ export class ServiceComponent {
 })
 export class RouteAComponent {}
 
-/*****************************/
+//////////////////////////////
 @Component({
   selector: "app-route-b",
   template: `
@@ -158,7 +158,7 @@ export class RouteAComponent {}
 })
 export class RouteBComponent {}
 
-/*****************************/
+//////////////////////////////
 @Component({
   selector: "app-nav",
   template: `
@@ -171,7 +171,7 @@ export class RouteBComponent {}
 })
 export class NavComponent {}
 
-/*****************************/
+//////////////////////////////
 @Component({
   selector: "app-tmp",
   template: `
@@ -191,6 +191,9 @@ export class NavComponent {}
     </div>
     <button (click)="onSave($event)">Save X</button>
     <button (click)="onSave()">Save Y</button>
+    <div [ngStyle]="currentStyles">
+      This div is initially italic, normal weight, and extra large (24px).
+    </div>
   `
 })
 export class TmpComponent {
@@ -200,6 +203,12 @@ export class TmpComponent {
   name: string = "MaXiu";
   isSpecial = true;
   currentHero: Hero = { id: 1, name: "March" };
+
+  currentStyles = {
+    "font-style": "italic",
+    "font-weight": "bold",
+    "font-size": "12px"
+  };
 
   getVal(): number {
     return 2;
@@ -214,7 +223,7 @@ export class TmpComponent {
   }
 }
 
-/*****************************/
+//////////////////////////////
 @Component({
   selector: "app-del",
   template: `
