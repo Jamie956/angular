@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
 
 import { Hero } from "./hero";
 import { HeroService } from "./hero.service";
@@ -180,7 +180,7 @@ export class NavComponent {}
     <div [hidden]="isHidden">Hidden</div>
     <div (keyup)="(0)"><input #heroInput /> {{ heroInput.value }}</div>
     <h3><img [src]="heroImageUrl" style="height:40px" /></h3>
-
+    <app-del (deleteRequest)="deleteHero()"></app-del>
   `
 })
 export class TmpComponent {
@@ -190,6 +190,25 @@ export class TmpComponent {
 
   getVal(): number {
     return 2;
+  }
+
+  deleteHero(hero: Hero) {
+    alert(`Delete ${hero ? hero.name : 'the hero'}.`);
+  }
+}
+
+/*****************************/
+@Component({
+  selector: "app-del",
+  template: `
+  <button (click)="delete()">Delete</button>
+  `
+})
+export class DelComponent {
+  @Output() deleteRequest = new EventEmitter<Hero>();
+
+  delete() {
+    this.deleteRequest.emit({ id: 1, name: "March" });
   }
 }
 
@@ -207,5 +226,6 @@ export const heroSwitchComponents = [
   RouteAComponent,
   RouteBComponent,
   NavComponent,
-  TmpComponent
+  TmpComponent,
+  DelComponent
 ];
