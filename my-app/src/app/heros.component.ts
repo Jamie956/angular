@@ -182,12 +182,14 @@ export class NavComponent {}
     <h3><img [src]="heroImageUrl" style="height:40px" /></h3>
     <app-del (deleteRequest)="deleteHero()"></app-del>
     <div (myClick)="clicked=$event" clickable>click me</div>{{clicked}}
+    <input [(ngModel)]="name">{{name}}
   `
 })
 export class TmpComponent {
   heroImageUrl =
     "http://www.wpclipart.com/cartoon/people/hero/hero_silhoutte_T.png";
   isHidden = false;
+  name: string = "MaXiu";
 
   getVal(): number {
     return 2;
