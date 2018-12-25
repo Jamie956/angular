@@ -179,6 +179,8 @@ export class NavComponent {}
     <p>Sum: {{ 1 + 1 + getVal() }}</p>
     <div [hidden]="isHidden">Hidden</div>
     <div (keyup)="(0)"><input #heroInput /> {{ heroInput.value }}</div>
+    <h3><img [src]="heroImageUrl" style="height:40px" /></h3>
+
   `
 })
 export class TmpComponent {
