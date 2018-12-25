@@ -239,6 +239,51 @@ export class DelComponent {
   }
 }
 
+//////////////////////////////
+@Component({
+  selector: "app-keyup",
+  template: `
+    <input (keyup)="onKey($event)" />
+    <p>{{ values }}</p>
+  `
+})
+export class KeyupComponent {
+  values = "";
+  onKey(event: KeyboardEvent) {
+    this.values += (<HTMLInputElement>event.target).value + " | ";
+  }
+}
+
+//////////////////////////////
+@Component({
+  selector: "app-keyup2",
+  template: `
+    <input #box (keyup)="onKey(box.value)" />
+    <p>{{ values }}</p>
+  `
+})
+export class Keyup2Component {
+  values = "";
+  onKey(value: string) {
+    this.values += value + " | ";
+  }
+}
+
+//////////////////////////////
+@Component({
+  selector: "app-keyup3",
+  template: `
+    <input #box (keyup.enter)="onEnter(box.value)" />
+    <p>{{ value }}</p>
+  `
+})
+export class Keyup3Component {
+  value = "";
+  onEnter(value: string) {
+    this.value = value;
+  }
+}
+
 export const heroSwitchComponents = [
   SecondComponent,
   HerosComponent,
@@ -254,5 +299,8 @@ export const heroSwitchComponents = [
   RouteBComponent,
   NavComponent,
   TmpComponent,
-  DelComponent
+  DelComponent,
+  KeyupComponent,
+  Keyup2Component,
+  Keyup3Component
 ];
