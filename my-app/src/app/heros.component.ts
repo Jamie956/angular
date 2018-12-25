@@ -169,7 +169,24 @@ export class RouteBComponent {}
     <router-outlet></router-outlet>
   `
 })
-export class NavBComponent {}
+export class NavComponent {}
+
+/*****************************/
+@Component({
+  selector: "app-tmp-sum",
+  template: `
+    <h3><img src="{{ heroImageUrl }}" style="height:40px" /></h3>
+    <p>Sum: {{ 1 + 1 + getVal() }}</p>
+  `
+})
+export class TmpSumComponent {
+  heroImageUrl =
+    "http://www.wpclipart.com/cartoon/people/hero/hero_silhoutte_T.png";
+
+  getVal(): number {
+    return 2;
+  }
+}
 
 export const heroSwitchComponents = [
   SecondComponent,
@@ -184,5 +201,6 @@ export const heroSwitchComponents = [
   ServiceComponent,
   RouteAComponent,
   RouteBComponent,
-  NavBComponent
+  NavComponent,
+  TmpSumComponent
 ];
