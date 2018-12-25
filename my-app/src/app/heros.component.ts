@@ -181,6 +181,7 @@ export class NavComponent {}
     <div (keyup)="(0)"><input #heroInput /> {{ heroInput.value }}</div>
     <h3><img [src]="heroImageUrl" style="height:40px" /></h3>
     <app-del (deleteRequest)="deleteHero()"></app-del>
+    <div (myClick)="clicked=$event" clickable>click me</div>{{clicked}}
   `
 })
 export class TmpComponent {
