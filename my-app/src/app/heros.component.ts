@@ -158,6 +158,19 @@ export class RouteAComponent {}
 })
 export class RouteBComponent {}
 
+/*****************************/
+@Component({
+  selector: "app-nav",
+  template: `
+    <ul>
+      <li><a routerLink="/routea">Route A</a></li>
+      <li><a routerLink="/routeb">Route B</a></li>
+    </ul>
+    <router-outlet></router-outlet>
+  `
+})
+export class NavBComponent {}
+
 export const heroSwitchComponents = [
   SecondComponent,
   HerosComponent,
@@ -170,5 +183,6 @@ export const heroSwitchComponents = [
   InputComponent,
   ServiceComponent,
   RouteAComponent,
-  RouteBComponent
+  RouteBComponent,
+  NavBComponent
 ];
