@@ -140,6 +140,24 @@ export class ServiceComponent {
   }
 }
 
+/*****************************/
+@Component({
+  selector: "app-route-a",
+  template: `
+    <div>Route A</div>
+  `
+})
+export class RouteAComponent {}
+
+/*****************************/
+@Component({
+  selector: "app-route-b",
+  template: `
+    <div>Route B</div>
+  `
+})
+export class RouteBComponent {}
+
 export const heroSwitchComponents = [
   SecondComponent,
   HerosComponent,
@@ -150,5 +168,7 @@ export const heroSwitchComponents = [
   IfngComponent,
   StyleComponent,
   InputComponent,
-  ServiceComponent
+  ServiceComponent,
+  RouteAComponent,
+  RouteBComponent
 ];

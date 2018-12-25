@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './main/app.component';
 import { heroSwitchComponents } from './heros.component';
 
+import { AppRoutingModule } from './app-routing.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -12,7 +14,8 @@ import { heroSwitchComponents } from './heros.component';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
