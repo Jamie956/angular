@@ -173,15 +173,18 @@ export class NavComponent {}
 
 /*****************************/
 @Component({
-  selector: "app-tmp-sum",
+  selector: "app-tmp",
   template: `
     <h3><img src="{{ heroImageUrl }}" style="height:40px" /></h3>
     <p>Sum: {{ 1 + 1 + getVal() }}</p>
+    <div [hidden]="isHidden">Hidden</div>
+    <div (keyup)="(0)"><input #heroInput /> {{ heroInput.value }}</div>
   `
 })
-export class TmpSumComponent {
+export class TmpComponent {
   heroImageUrl =
     "http://www.wpclipart.com/cartoon/people/hero/hero_silhoutte_T.png";
+  isHidden = false;
 
   getVal(): number {
     return 2;
@@ -202,5 +205,5 @@ export const heroSwitchComponents = [
   RouteAComponent,
   RouteBComponent,
   NavComponent,
-  TmpSumComponent
+  TmpComponent
 ];
