@@ -180,11 +180,17 @@ export class NavComponent {}
     <div [hidden]="isHidden">Hidden</div>
     <div (keyup)="(0)"><input #heroInput /> {{ heroInput.value }}</div>
     <h3><img [src]="heroImageUrl" style="height:40px" /></h3>
-    <app-del (deleteRequest)="deleteHero()"></app-del>
+    <app-del
+      (deleteRequest)="deleteHero($event)"
+      [hero]="currentHero"
+    ></app-del>
     <div (myClick)="clicked = $event" clickable>click me {{ clicked }}</div>
     <input [(ngModel)]="name" />{{ name }}
-    <div><button [style.color]="isSpecial ? 'red' : 'green'">button</button></div>
-    
+    <div>
+      <button [style.color]="isSpecial ? 'red' : 'green'">button</button>
+    </div>
+    <button (click)="onSave($event)">Save X</button>
+    <button (click)="onSave()">Save Y</button>
   `
 })
 export class TmpComponent {
@@ -193,13 +199,18 @@ export class TmpComponent {
   isHidden = false;
   name: string = "MaXiu";
   isSpecial = true;
-  
+  currentHero: Hero = { id: 1, name: "March" };
+
   getVal(): number {
     return 2;
   }
 
   deleteHero(hero: Hero) {
     alert(`Delete ${hero ? hero.name : "the hero"}.`);
+  }
+
+  onSave(event: KeyboardEvent) {
+    alert(event);
   }
 }
 
@@ -212,6 +223,7 @@ export class TmpComponent {
 })
 export class DelComponent {
   @Output() deleteRequest = new EventEmitter<Hero>();
+  @Input() hero: Hero;
 
   delete() {
     this.deleteRequest.emit({ id: 1, name: "March" });
