@@ -181,8 +181,10 @@ export class NavComponent {}
     <div (keyup)="(0)"><input #heroInput /> {{ heroInput.value }}</div>
     <h3><img [src]="heroImageUrl" style="height:40px" /></h3>
     <app-del (deleteRequest)="deleteHero()"></app-del>
-    <div (myClick)="clicked=$event" clickable>click me</div>{{clicked}}
-    <input [(ngModel)]="name">{{name}}
+    <div (myClick)="clicked = $event" clickable>click me {{ clicked }}</div>
+    <input [(ngModel)]="name" />{{ name }}
+    <div><button [style.color]="isSpecial ? 'red' : 'green'">button</button></div>
+    
   `
 })
 export class TmpComponent {
@@ -190,13 +192,14 @@ export class TmpComponent {
     "http://www.wpclipart.com/cartoon/people/hero/hero_silhoutte_T.png";
   isHidden = false;
   name: string = "MaXiu";
-
+  isSpecial = true;
+  
   getVal(): number {
     return 2;
   }
 
   deleteHero(hero: Hero) {
-    alert(`Delete ${hero ? hero.name : 'the hero'}.`);
+    alert(`Delete ${hero ? hero.name : "the hero"}.`);
   }
 }
 
@@ -204,7 +207,7 @@ export class TmpComponent {
 @Component({
   selector: "app-del",
   template: `
-  <button (click)="delete()">Delete</button>
+    <button (click)="delete()">Delete</button>
   `
 })
 export class DelComponent {
