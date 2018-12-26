@@ -423,6 +423,21 @@ export class DireComponent {
   color: string;
 }
 
+//////////////////////////////
+@Component({
+  selector: "app-pipe",
+  template: `
+    <div *ngFor="let hero of (heroes | longHeroes)">{{ hero.name }}</div>
+  `
+})
+export class PipeComponent {
+  heroes: Hero[] = [
+    { id: 1, name: "Blaster" },
+    { id: 2, name: "Blade" },
+    { id: 3, name: "Bow Master" }
+  ];
+}
+
 export const heroSwitchComponents = [
   SecondComponent,
   HerosComponent,
@@ -450,5 +465,6 @@ export const heroSwitchComponents = [
   VoteTakerComponent,
   CountChildComponent,
   CountParentComponent,
-  DireComponent
+  DireComponent,
+  PipeComponent
 ];

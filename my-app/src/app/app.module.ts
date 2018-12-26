@@ -9,12 +9,15 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { ClickDirective, HighlightDirective } from './app.directive';
 
+import { LongHeroesPipe } from './app.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
     heroSwitchComponents,
     ClickDirective,
-    HighlightDirective
+    HighlightDirective,
+    LongHeroesPipe
   ],
   imports: [
     BrowserModule,
