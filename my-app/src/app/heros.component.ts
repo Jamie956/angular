@@ -287,11 +287,11 @@ export class Keyup3Component {
 @Component({
   selector: "app-hero-child",
   template: `
-    <p>{{ hero.name }}</p>
+    <p>{{ myhero.name }}</p>
   `
 })
 export class HeroChildComponent {
-  @Input() hero: Hero;
+  @Input("hero") myhero: Hero;
 }
 
 @Component({
