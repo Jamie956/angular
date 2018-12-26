@@ -338,15 +338,15 @@ export class NameParentComponent {
 
 //////////////////////////////
 @Component({
-  selector: 'app-voter',
+  selector: "app-voter",
   template: `
-    <h4>{{name}}</h4>
-    <button (click)="vote(true)"  [disabled]="didVote">Agree</button>
+    <h4>{{ name }}</h4>
+    <button (click)="vote(true)" [disabled]="didVote">Agree</button>
     <button (click)="vote(false)" [disabled]="didVote">Disagree</button>
   `
 })
 export class VoterComponent {
-  @Input()  name: string;
+  @Input() name: string;
   @Output() voted = new EventEmitter<boolean>();
   didVote = false;
 
@@ -357,23 +357,51 @@ export class VoterComponent {
 }
 
 @Component({
-  selector: 'app-vote-taker',
+  selector: "app-vote-taker",
   template: `
-    <h2>Should mankind colonize the Universe?</h2>
-    <h3>Agree: {{agreed}}, Disagree: {{disagreed}}</h3>
-    <app-voter *ngFor="let voter of voters"
+    <h3>Agree: {{ agreed }}, Disagree: {{ disagreed }}</h3>
+    <app-voter
+      *ngFor="let voter of voters"
       [name]="voter"
-      (voted)="onVoted($event)">
+      (voted)="onVoted($event)"
+    >
     </app-voter>
   `
 })
 export class VoteTakerComponent {
   agreed = 0;
   disagreed = 0;
-  voters = ['Mr. IQ', 'Ms. Universe', 'Bombasto'];
+  voters = ["Mr. IQ", "Ms. Universe", "Bombasto"];
 
   onVoted(agreed: boolean) {
     agreed ? this.agreed++ : this.disagreed++;
+  }
+}
+
+//////////////////////////////
+@Component({
+  selector: "app-parent-counter",
+  template: `
+    <button (click)="counter.inc()">Inc</button>
+    <button (click)="counter.des()">Des</button>
+    <div>{{ counter.count }}</div>
+    <app-counter #counter></app-counter>
+  `
+})
+export class CountParentComponent {}
+
+@Component({
+  selector: "app-counter",
+  template: "<p>Child Counter</p>"
+})
+export class CountChildComponent {
+  count = 0;
+
+  inc() {
+    this.count = this.count + 1;
+  }
+  des() {
+    this.count = this.count - 1;
   }
 }
 
@@ -401,5 +429,7 @@ export const heroSwitchComponents = [
   NameChildComponent,
   NameParentComponent,
   VoterComponent,
-  VoteTakerComponent
+  VoteTakerComponent,
+  CountChildComponent,
+  CountParentComponent
 ];
