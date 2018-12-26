@@ -3,6 +3,9 @@ import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
 import { Hero } from "./hero";
 import { HeroService } from "./hero.service";
 
+import { Observable, interval } from "rxjs";
+import { map, take } from "rxjs/operators";
+
 //////////////////////////////
 @Component({
   selector: "app-second",
@@ -438,6 +441,35 @@ export class PipeComponent {
   ];
 }
 
+//////////////////////////////
+@Component({
+  selector: "app-async",
+  template: `
+    <p>Message: {{ message$ | async }}</p>
+    <button (click)="resend()">Resend</button>
+  `
+})
+export class AsyncComponent {
+  message$: Observable<string>;
+
+  private messages = [
+    "You are my hero!",
+    "You are the best hero!",
+    "Will you be my hero?"
+  ];
+
+  constructor() {
+    this.resend();
+  }
+
+  resend() {
+    this.message$ = interval(500).pipe(
+      map(i => this.messages[i]),
+      take(this.messages.length)
+    );
+  }
+}
+
 export const heroSwitchComponents = [
   SecondComponent,
   HerosComponent,
@@ -466,5 +498,6 @@ export const heroSwitchComponents = [
   CountChildComponent,
   CountParentComponent,
   DireComponent,
-  PipeComponent
+  PipeComponent,
+  AsyncComponent
 ];
