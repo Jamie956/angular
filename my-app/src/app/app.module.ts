@@ -1,14 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './main/app.component';
 import { heroSwitchComponents } from './heros.component';
-
 import { AppRoutingModule } from './app-routing.module';
-
 import { ClickDirective, HighlightDirective } from './app.directive';
-
 import { LongHeroesPipe } from './app.pipe';
 
 @NgModule({
@@ -22,7 +19,8 @@ import { LongHeroesPipe } from './app.pipe';
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

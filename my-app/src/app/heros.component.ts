@@ -6,6 +6,8 @@ import { HeroService } from "./hero.service";
 import { Observable, interval } from "rxjs";
 import { map, take } from "rxjs/operators";
 
+import { FormControl } from "@angular/forms";
+
 //////////////////////////////
 @Component({
   selector: "app-second",
@@ -470,6 +472,23 @@ export class AsyncComponent {
   }
 }
 
+//////////////////////////////
+@Component({
+  selector: "app-form1",
+  template: `
+    <label> Name: <input type="text" [formControl]="name"/></label>
+    <p>Value: {{ name.value }}</p>
+    <p><button (click)="updateName()">Update Name</button></p>
+  `
+})
+export class Form1Component {
+  name = new FormControl("");
+
+  updateName() {
+    this.name.setValue("Nancy");
+  }
+}
+
 export const heroSwitchComponents = [
   SecondComponent,
   HerosComponent,
@@ -499,5 +518,6 @@ export const heroSwitchComponents = [
   CountParentComponent,
   DireComponent,
   PipeComponent,
-  AsyncComponent
+  AsyncComponent,
+  Form1Component
 ];
