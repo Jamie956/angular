@@ -405,6 +405,24 @@ export class CountChildComponent {
   }
 }
 
+//////////////////////////////
+@Component({
+  selector: "app-dire",
+  template: `
+    <div>
+      <input type="radio" name="colors" (click)="color = 'lightgreen'" />Green
+      <input type="radio" name="colors" (click)="color = 'yellow'" />Yellow
+      <input type="radio" name="colors" (click)="color = 'cyan'" />Cyan
+    </div>
+    <p [appHighlight]="color">Highlight me!</p>
+
+    <p [appHighlight]="color" defaultColor="violet">Default Color is violet</p>
+  `
+})
+export class DireComponent {
+  color: string;
+}
+
 export const heroSwitchComponents = [
   SecondComponent,
   HerosComponent,
@@ -431,5 +449,6 @@ export const heroSwitchComponents = [
   VoterComponent,
   VoteTakerComponent,
   CountChildComponent,
-  CountParentComponent
+  CountParentComponent,
+  DireComponent
 ];

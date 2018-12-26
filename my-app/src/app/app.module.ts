@@ -7,13 +7,14 @@ import { heroSwitchComponents } from './heros.component';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { ClickDirective } from './click.directive';
+import { ClickDirective, HighlightDirective } from './app.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     heroSwitchComponents,
-    ClickDirective
+    ClickDirective,
+    HighlightDirective
   ],
   imports: [
     BrowserModule,
