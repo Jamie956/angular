@@ -223,7 +223,6 @@ export class TmpComponent {
   }
 }
 
-//////////////////////////////
 @Component({
   selector: "app-del",
   template: `
@@ -284,6 +283,31 @@ export class Keyup3Component {
   }
 }
 
+//////////////////////////////
+@Component({
+  selector: "app-hero-child",
+  template: `
+    <p>{{ hero.name }}</p>
+  `
+})
+export class HeroChildComponent {
+  @Input() hero: Hero;
+}
+
+@Component({
+  selector: "app-hero-parent",
+  template: `
+    <app-hero-child *ngFor="let hero of heroes" [hero]="hero"></app-hero-child>
+  `
+})
+export class HeroParentComponent {
+  heroes: Hero[] = [
+    { id: 1, name: "Blaster" },
+    { id: 2, name: "Blade" },
+    { id: 3, name: "Bow Master" }
+  ];
+}
+
 export const heroSwitchComponents = [
   SecondComponent,
   HerosComponent,
@@ -302,5 +326,7 @@ export const heroSwitchComponents = [
   DelComponent,
   KeyupComponent,
   Keyup2Component,
-  Keyup3Component
+  Keyup3Component,
+  HeroChildComponent,
+  HeroParentComponent
 ];
