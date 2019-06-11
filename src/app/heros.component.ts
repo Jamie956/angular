@@ -8,59 +8,22 @@ import { map, take } from "rxjs/operators";
 
 import { FormControl } from "@angular/forms";
 
-//////////////////////////////
-@Component({
-  selector: "app-second",
-  template: `
-    {{ title }}
-  `
-})
-export class SecondComponent implements OnInit {
-  title = "Second Component";
-  constructor() {}
-  ngOnInit() {}
-}
 
-//////////////////////////////
 @Component({
   selector: "app-heros",
   template: `
-    <div>{{ hero.id }}</div>
+    Hero:
     <div>{{ hero.name }}</div>
+    Upper Name:
+    <div>{{ hero.name | uppercase }}</div>
+    Two Way Binding:
+    <input [(ngModel)]="hero.name" placeholder="name" />
   `
 })
 export class HerosComponent {
   hero: Hero = {
     id: 1,
     name: "Windstorm"
-  };
-}
-
-//////////////////////////////
-@Component({
-  selector: "app-upper",
-  template: `
-    <div>{{ hero.name | uppercase }}</div>
-  `
-})
-export class UpperComponent {
-  hero: Hero = {
-    id: 1,
-    name: "Ark"
-  };
-}
-
-//////////////////////////////
-@Component({
-  selector: "app-twoway",
-  template: `
-    <input [(ngModel)]="hero.name" placeholder="name" />
-  `
-})
-export class TwowayComponent {
-  hero: Hero = {
-    id: 1,
-    name: "Kanna"
   };
 }
 
@@ -81,12 +44,13 @@ export class ListHerosComponent {
 @Component({
   selector: "app-click",
   template: `
-    <button (click)="onClick()">Click me!</button>
+    <button (click)="onClick()">Click</button>
   `
 })
 export class ClickComponent {
   onClick(): void {
-    console.log("Click!!");
+    // console.log("Click!!");
+    alert('???');
   }
 }
 
@@ -109,8 +73,8 @@ export class IfngComponent {}
   styles: [".selected { color: red; }"]
 })
 export class StyleComponent {
-  hero = "Cannon";
-  selectedHero = "Cannon";
+  hero = "x";
+  selectedHero = "x";
 }
 
 //////////////////////////////
@@ -137,12 +101,13 @@ export class ServiceComponent {
   constructor(private heroService: HeroService) {}
 
   ngOnInit() {
-    this.getHeroes();
+    // this.Heroes();
+    this.heroService.get().subscribe(hero => (this.hero = hero));
   }
 
-  getHeroes(): void {
-    this.heroService.getHeroes().subscribe(hero => (this.hero = hero));
-  }
+  // Heroes(): void {
+  //   this.heroService.get().subscribe(hero => (this.hero = hero));
+  // }
 }
 
 //////////////////////////////
@@ -181,24 +146,24 @@ export class NavComponent {}
   selector: "app-tmp",
   template: `
     <h3><img src="{{ heroImageUrl }}" style="height:40px" /></h3>
+    <h3><img [src]="heroImageUrl" style="height:40px" /></h3>
+
+
     <p>Sum: {{ 1 + 1 + getVal() }}</p>
     <div [hidden]="isHidden">Hidden</div>
     <div (keyup)="(0)"><input #heroInput /> {{ heroInput.value }}</div>
-    <h3><img [src]="heroImageUrl" style="height:40px" /></h3>
+
     <app-del
       (deleteRequest)="deleteHero($event)"
       [hero]="currentHero"
     ></app-del>
+
     <div (myClick)="clicked = $event" clickable>click me {{ clicked }}</div>
     <input [(ngModel)]="name" />{{ name }}
-    <div>
-      <button [style.color]="isSpecial ? 'red' : 'green'">button</button>
-    </div>
-    <button (click)="onSave($event)">Save X</button>
-    <button (click)="onSave()">Save Y</button>
-    <div [ngStyle]="currentStyles">
-      This div is initially italic, normal weight, and extra large (24px).
-    </div>
+    <div [style.color]="isSpecial ? 'red' : 'green'">fg</div>
+    <button (click)="onSave($event)">Save</button>
+
+    <div [ngStyle]="currentStyles">sf</div>
   `
 })
 export class TmpComponent {
@@ -210,9 +175,7 @@ export class TmpComponent {
   currentHero: Hero = { id: 1, name: "March" };
 
   currentStyles = {
-    "font-style": "italic",
-    "font-weight": "bold",
-    "font-size": "12px"
+    "color": "red"
   };
 
   getVal(): number {
@@ -239,7 +202,7 @@ export class DelComponent {
   @Input() hero: Hero;
 
   delete() {
-    this.deleteRequest.emit({ id: 1, name: "March" });
+    this.deleteRequest.emit(this.hero);
   }
 }
 
@@ -490,10 +453,7 @@ export class Form1Component {
 }
 
 export const heroSwitchComponents = [
-  SecondComponent,
   HerosComponent,
-  UpperComponent,
-  TwowayComponent,
   ListHerosComponent,
   ClickComponent,
   IfngComponent,

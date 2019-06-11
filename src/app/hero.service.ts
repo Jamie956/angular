@@ -7,7 +7,7 @@ import { Hero } from "./hero";
   providedIn: "root"
 })
 export class HeroService {
-  getHeroes(): Observable<Hero> {
+  get(): Observable<Hero> {
     return of({ id: 11, name: "Mr. Nice" });
   }
 }
