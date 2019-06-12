@@ -279,17 +279,18 @@ export class VoteTakerComponent {
 @Component({
   selector: "app-parent-counter",
   template: `
+    <app-counter #counter></app-counter>
+
     <button (click)="counter.inc()">Inc</button>
     <button (click)="counter.des()">Des</button>
     <div>{{ counter.count }}</div>
-    <app-counter #counter></app-counter>
   `
 })
 export class CountParentComponent {}
 
 @Component({
   selector: "app-counter",
-  template: "<p>Child Counter</p>"
+  template: ""
 })
 export class CountChildComponent {
   count = 0;
@@ -329,9 +330,9 @@ export class DireComponent {
 })
 export class PipeComponent {
   heroes: Hero[] = [
-    { id: 1, name: "Blaster" },
-    { id: 2, name: "Blade" },
-    { id: 3, name: "Bow Master" }
+    { id: 1, name: "a" },
+    { id: 2, name: "b" },
+    { id: 3, name: "long hero" }
   ];
 }
 
@@ -370,23 +371,19 @@ export class AsyncComponent {
   template: `
     <label> Name: <input type="text" [formControl]="name"/></label>
     <p>Value: {{ name.value }}</p>
-    <p><button (click)="updateName()">Update Name</button></p>
+    <p><button (click)="reset()">reset</button></p>
   `
 })
 export class Form1Component {
   name = new FormControl("");
 
-  updateName() {
+  reset() {
     this.name.setValue("Nancy");
   }
 }
 
 export const heroSwitchComponents = [
   HerosComponent,
-  // ListHerosComponent,
-  // ClickComponent,
-  // IfngComponent,
-  // StyleComponent,
   InputComponent,
   ServiceComponent,
   RouteAComponent,
@@ -395,13 +392,9 @@ export const heroSwitchComponents = [
   TmpComponent,
   DelComponent,
   KeyupComponent,
-  // Keyup2Component,
-  // Keyup3Component,
   Child1Component,
   Child2Component,
-
   ParentComponent,
-  // NameParentComponent,
   VoterComponent,
   VoteTakerComponent,
   CountChildComponent,
