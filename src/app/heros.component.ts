@@ -17,7 +17,13 @@ import { FormControl } from "@angular/forms";
     Upper Name:
     <div>{{ hero.name | uppercase }}</div>
     Two Way Binding:
-    <input [(ngModel)]="hero.name" placeholder="name" />
+    <div><input [(ngModel)]="hero.name" placeholder="name" /></div>
+    ngFor:
+    <ul><li *ngFor="let hero of heroes">{{ hero.name }}</li></ul>
+    Click event
+    <div><button (click)="onClick()">Click</button></div>
+    ngIf
+    <div *ngIf="xy">{{ xy.z }}</div>
   `
 })
 export class HerosComponent {
@@ -25,56 +31,10 @@ export class HerosComponent {
     id: 1,
     name: "Windstorm"
   };
-}
-
-//////////////////////////////
-@Component({
-  selector: "app-list-heros",
-  template: `
-    <ul>
-      <li *ngFor="let hero of heroes">{{ hero.name }}</li>
-    </ul>
-  `
-})
-export class ListHerosComponent {
   heroes: Hero[] = [{ id: 1, name: "Blaster" }, { id: 2, name: "Blade" }];
-}
-
-//////////////////////////////
-@Component({
-  selector: "app-click",
-  template: `
-    <button (click)="onClick()">Click</button>
-  `
-})
-export class ClickComponent {
   onClick(): void {
-    // console.log("Click!!");
     alert('???');
   }
-}
-
-//////////////////////////////
-@Component({
-  selector: "app-ifng",
-  template: `
-    ngIf
-    <div *ngIf="hero">{{ hero.name }}</div>
-  `
-})
-export class IfngComponent {}
-
-//////////////////////////////
-@Component({
-  selector: "app-style",
-  template: `
-    <div [class.selected]="hero === selectedHero">Cannon</div>
-  `,
-  styles: [".selected { color: red; }"]
-})
-export class StyleComponent {
-  hero = "x";
-  selectedHero = "x";
 }
 
 //////////////////////////////
@@ -101,13 +61,8 @@ export class ServiceComponent {
   constructor(private heroService: HeroService) {}
 
   ngOnInit() {
-    // this.Heroes();
     this.heroService.get().subscribe(hero => (this.hero = hero));
   }
-
-  // Heroes(): void {
-  //   this.heroService.get().subscribe(hero => (this.hero = hero));
-  // }
 }
 
 //////////////////////////////
@@ -210,83 +165,54 @@ export class DelComponent {
 @Component({
   selector: "app-keyup",
   template: `
-    <input (keyup)="onKey($event)" />
+    keyup1
+    <input (keyup)="onKey1($event)" />
     <p>{{ values }}</p>
-  `
-})
-export class KeyupComponent {
-  values = "";
-  onKey(event: KeyboardEvent) {
-    this.values += (<HTMLInputElement>event.target).value + " | ";
-  }
-}
 
-//////////////////////////////
-@Component({
-  selector: "app-keyup2",
-  template: `
-    <input #box (keyup)="onKey(box.value)" />
+    keyup2
+    <input #box (keyup)="onKey2(box.value)" />
     <p>{{ values }}</p>
-  `
-})
-export class Keyup2Component {
-  values = "";
-  onKey(value: string) {
-    this.values += value + " | ";
-  }
-}
 
-//////////////////////////////
-@Component({
-  selector: "app-keyup3",
-  template: `
-    <input #box (keyup.enter)="onEnter(box.value)" />
+    keyup3
+    <input #box2 (keyup.enter)="onKey3(box2.value)" />
     <p>{{ value }}</p>
   `
 })
-export class Keyup3Component {
-  value = "";
-  onEnter(value: string) {
-    this.value = value;
+export class KeyupComponent {
+  onKey1(event: KeyboardEvent) {
+    alert((<HTMLInputElement>event.target).value);
+  }
+  onKey2(value: string) {
+    alert(value);
+  }
+  onKey3(value: string) {
+    alert(value);
   }
 }
 
 //////////////////////////////
 @Component({
-  selector: "app-hero-child",
+  selector: "app-child1",
   template: `
-    <p>{{ myhero.name }}</p>
+    <p>{{name}}</p>
   `
 })
-export class HeroChildComponent {
-  @Input("hero") myhero: Hero;
+export class Child1Component {
+  @Input("name") name: String;
 }
 
 @Component({
-  selector: "app-hero-parent",
+  selector: "app-child2",
   template: `
-    <app-hero-child *ngFor="let hero of heroes" [hero]="hero"></app-hero-child>
+    <p>{{name}}</p>
   `
 })
-export class HeroParentComponent {
-  heroes: Hero[] = [
-    { id: 1, name: "Blaster" },
-    { id: 2, name: "Blade" },
-    { id: 3, name: "Bow Master" }
-  ];
-}
-
-//////////////////////////////
-@Component({
-  selector: "app-name-child",
-  template: '<h3>"{{name}}"</h3>'
-})
-export class NameChildComponent {
+export class Child2Component {
   private _name = "";
 
   @Input()
   set name(name: string) {
-    this._name = (name && name.trim()) || "<no name set>";
+    this._name = "*"+name;
   }
 
   get name(): string {
@@ -295,13 +221,16 @@ export class NameChildComponent {
 }
 
 @Component({
-  selector: "app-name-parent",
+  selector: "app-parent",
   template: `
-    <app-name-child *ngFor="let name of names" [name]="name"></app-name-child>
+    child1：
+    <app-child1 *ngFor="let name of names" [name]="name"></app-child1>
+    child2：
+    <app-child2 *ngFor="let name of names" [name]="name"></app-child2>
   `
 })
-export class NameParentComponent {
-  names = ["Mr. IQ", "   ", "  Bombasto  "];
+export class ParentComponent {
+  names = ["Mr. IQ", "Bombasto"];
 }
 
 //////////////////////////////
@@ -454,10 +383,10 @@ export class Form1Component {
 
 export const heroSwitchComponents = [
   HerosComponent,
-  ListHerosComponent,
-  ClickComponent,
-  IfngComponent,
-  StyleComponent,
+  // ListHerosComponent,
+  // ClickComponent,
+  // IfngComponent,
+  // StyleComponent,
   InputComponent,
   ServiceComponent,
   RouteAComponent,
@@ -466,12 +395,13 @@ export const heroSwitchComponents = [
   TmpComponent,
   DelComponent,
   KeyupComponent,
-  Keyup2Component,
-  Keyup3Component,
-  HeroChildComponent,
-  HeroParentComponent,
-  NameChildComponent,
-  NameParentComponent,
+  // Keyup2Component,
+  // Keyup3Component,
+  Child1Component,
+  Child2Component,
+
+  ParentComponent,
+  // NameParentComponent,
   VoterComponent,
   VoteTakerComponent,
   CountChildComponent,
